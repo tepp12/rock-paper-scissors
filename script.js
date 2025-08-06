@@ -2,6 +2,17 @@ let choice1 = "rock";
 let choice2 = "paper";
 let choice3 = "scissors";
 
+const rockButton = document.createElement("button")
+rockButton.textContent = "STONE"
+
+const paperButton = document.createElement("button")
+paperButton.textContent = "SHEET"
+
+const scissorsButton = document.createElement("button")
+scissorsButton.textContent = "SHEAR"
+
+let resultDisplay = document.createElement("div")
+
 // function to randomize the selection
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -47,11 +58,11 @@ function playGame(){
                 ++humanScore;
                 return;    
             case(humanString == "scissors" && computerChoice == "rock"):
-                console.log("YOU LOST\nSHEARS IS ANNIHILATED BY THE STONE");
+                console.log("YOU LOST\nSHEAR IS ANNIHILATED BY THE STONE");
                 ++computerScore;
                 return;
             case(humanString == "rock" && computerChoice == "scissors"):
-                console.log("YOU WON\nSTONE ERADICATES THE SHEARS")    
+                console.log("YOU WON\nSTONE ERADICATES THE SHEAR")    
                 ++humanScore;
                 return;
             case(humanString == "paper" && computerChoice == "scissors"):
@@ -65,22 +76,21 @@ function playGame(){
         }
     }
 
-    for (i = 0; i < 5; i++) {
+    // for (i = 0; i < 5; i++) {;
     const humanSelection = getHumanChoice();
     const computerSelection = getComputerChoice();
-    //console.log(humanSelection);
-    //console.log(computerSelection);
-    playRound(humanSelection, computerSelection);
-    }
-
-    if (humanScore > computerScore){
-        console.log("CONGRATULATIONS\nYOU HAVE WON THIS TRIVIAL MATCH");
-    }
-    else if(computerScore > humanScore){
-        console.log("YOU HAVE SUCCUMBED TO THE DEVICE'S WILL");
-    }
-    else if (computerScore == humanScore){
-        console.log("YOU AND THE DEVICE ARE EQUALLY MATCHED");
+    playRound(humanSelection, computerSelection);{
+        if (humanScore > computerScore){
+            resultDisplay.textContent = "CONGRATULATIONS\nYOU HAVE WON THIS TRIVIAL MATCH"
+            console.log("CONGRATULATIONS\nYOU HAVE WON THIS TRIVIAL MATCH");
+        }
+        else if(computerScore > humanScore){
+            resultDisplay.textContent = "YOU HAVE SUCCUMBED TO THE DEVICE'S WILL"
+            console.log("YOU HAVE SUCCUMBED TO THE DEVICE'S WILL");
+        }
+        else if (computerScore == humanScore){
+            console.log("YOU AND THE DEVICE ARE EQUALLY MATCHED");
+        }
     }
 }
 
