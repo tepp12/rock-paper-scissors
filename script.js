@@ -120,7 +120,6 @@ function playGame() {
       }
     }
 
-    // for (i = 0; i < 5; i++) {;
     const humanSelection = playerMove;
     const computerSelection = getComputerChoice();
     playRound(humanSelection, computerSelection);
