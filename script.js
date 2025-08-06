@@ -2,16 +2,38 @@ let choice1 = "rock";
 let choice2 = "paper";
 let choice3 = "scissors";
 
-const rockButton = document.createElement("button")
-rockButton.textContent = "STONE"
+let playerMove = ""
 
-const paperButton = document.createElement("button")
-paperButton.textContent = "SHEET"
+const container = document.querySelector("#container");
+const scores = document.querySelector("#scores");
 
-const scissorsButton = document.createElement("button")
-scissorsButton.textContent = "SHEAR"
+const rockButton = document.createElement("button");
+rockButton.textContent = "STONE";
+const paperButton = document.createElement("button");
+paperButton.textContent = "SHEET";
+const scissorsButton = document.createElement("button");
+scissorsButton.textContent = "SHEAR";
 
-let resultDisplay = document.createElement("div")
+let resultDisplay = document.createElement("div");
+
+let humanScore = 0;
+let computerScore = 0;
+
+let playerScoreDiv = document.createElement("div");
+playerScoreDiv.textContent = `HUMAN'S SCORE: ${humanScore}`;
+let computerScoreDiv = document.createElement("div");
+computerScoreDiv.textContent = `MACHINE'S SCORE: ${computerScore}`;
+
+
+container.appendChild(resultDisplay)
+container.appendChild(rockButton)
+container.appendChild(paperButton)
+container.appendChild(scissorsButton)
+
+scores.appendChild(playerScoreDiv)
+scores.appendChild(computerScoreDiv)
+
+const buttons = document.querySelectorAll("button");
 
 // function to randomize the selection
 function getRandomInt(max) {
@@ -31,67 +53,88 @@ function getComputerChoice() {
     }
 }
 
-function getHumanChoice() {
-    let playerChoice = prompt("MAKE YOUR CHOICE");
-    return playerChoice;
-}
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    switch(true){
+        case(button.textContent == "STONE"):
+            playerMove = choice1;
+            console.log("played game and it was rock")
+            playGame();
+            return;
+        case(button.textContent == "SHEAR"):
+            playerMove = choice2;
+            playGame();
+            return;
+        case(button.textContent == "SHEET"):
+            playerMove = choice3;
+            playGame();
+            return;
+    }
+  })
+});
+
+
+// function getHumanChoice() {
+//     let playerChoice = prompt("MAKE YOUR CHOICE");
+//     return playerChoice;
+// }
 
 function playGame(){
+    if (humanScore < 5 && computerScore < 5){
+        console.log(humanScore)
+        console.log(computerScore)
+        function playRound(humanChoice ,computerChoice) {
+            switch(true) {
+                case(humanChoice === computerChoice):
+                    resultDisplay.textContent = "YOU TIED WITH THE DEVICE"
+                    return;
+                case(humanChoice == "rock" && computerChoice == "paper"):
+                    resultDisplay.textContent = "YOU LOST, STONE IS ENCLOSED BY THE SHEET"
+                    ++computerScore;
+                    computerScoreDiv.textContent = `MACHINE'S SCORE: ${computerScore}`;
+                    return;
+                case(humanChoice == "paper" && computerChoice == "rock"):
+                    resultDisplay.textContent = "YOU WON, SHEET CONTAINS THE STONE"
+                    ++humanScore;
+                    playerScoreDiv.textContent = `HUMAN'S SCORE: ${humanScore}`;
+                    return;    
+                case(humanChoice == "scissors" && computerChoice == "rock"):
+                    resultDisplay.textContent = "YOU LOST, SHEAR IS ANNIHILATED BY THE STONE"
+                    ++computerScore;
+                    computerScoreDiv.textContent = `MACHINE'S SCORE: ${computerScore}`;
+                    return;
+                case(humanChoice == "rock" && computerChoice == "scissors"):
+                    resultDisplay.textContent = "YOU WON, STONE ERADICATES THE SHEAR"
+                    ++humanScore;
+                    playerScoreDiv.textContent = `HUMAN'S SCORE: ${humanScore}`;
+                    return;
+                case(humanChoice == "paper" && computerChoice == "scissors"):
+                    resultDisplay.textContent = "YOU LOST, SHEET IS SLICED BY THE SHEAR"
+                    ++computerScore;
+                    computerScoreDiv.textContent = `MACHINE'S SCORE: ${computerScore}`;
+                    return;
+                case(humanChoice == "scissors" && computerChoice == "paper"):
+                    resultDisplay.textContent = "YOU WON, SHEAR CUTS DOWN THE SHEET";
+                    ++humanScore;
+                    playerScoreDiv.textContent = `HUMAN'S SCORE: ${humanScore}`;
+                    return;
+            }
+        }
 
-    let humanScore = 0;
-    let computerScore = 0;
-
-    function playRound(humanChoice, computerChoice) {
-        let humanString = humanChoice.toLowerCase();
-        
-        switch(true) {
-            case(humanString == computerChoice):
-                console.log("YOU TIED WITH THE DEVICE");
-                return;
-            case(humanString == "rock" && computerChoice == "paper"):
-                console.log("YOU LOST\nSTONE IS ENCLOSED BY THE SHEET");
-                // increase the computers's score if it wins
-                ++computerScore;
-                return;
-            case(humanString == "paper" && computerChoice == "rock"):
-                console.log("YOU WON\nSHEET CONTAINS THE STONE");
-                ++humanScore;
-                return;    
-            case(humanString == "scissors" && computerChoice == "rock"):
-                console.log("YOU LOST\nSHEAR IS ANNIHILATED BY THE STONE");
-                ++computerScore;
-                return;
-            case(humanString == "rock" && computerChoice == "scissors"):
-                console.log("YOU WON\nSTONE ERADICATES THE SHEAR")    
-                ++humanScore;
-                return;
-            case(humanString == "paper" && computerChoice == "scissors"):
-                console.log("YOU LOST\nSHEET IS SLICED BY THE SHEARS")
-                ++computerScore;
-                return;
-            case(humanstring == "scissors" && computerChoice == "paper"):
-                console.log("YOU WON\nSHEAR CUTS DOWN THE SHEET")
-                ++humanScore;
-                return;
+        // for (i = 0; i < 5; i++) {;
+        const humanSelection = playerMove
+        const computerSelection = getComputerChoice();
+        playRound(humanSelection, computerSelection);{
+            if (humanScore >= 5){
+                resultDisplay.textContent = "CONGRATULATIONS\nYOU HAVE WON THIS TRIVIAL MATCH";
+                console.log("CONGRATULATIONS\nYOU HAVE WON THIS TRIVIAL MATCH");
+            }
+            else if(computerScore >= 5){
+                resultDisplay.textContent = "YOU HAVE SUCCUMBED TO THE DEVICE'S WILL";
+                console.log("YOU HAVE SUCCUMBED TO THE DEVICE'S WILL");
+            }
         }
-    }
-
-    // for (i = 0; i < 5; i++) {;
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);{
-        if (humanScore > computerScore){
-            resultDisplay.textContent = "CONGRATULATIONS\nYOU HAVE WON THIS TRIVIAL MATCH"
-            console.log("CONGRATULATIONS\nYOU HAVE WON THIS TRIVIAL MATCH");
-        }
-        else if(computerScore > humanScore){
-            resultDisplay.textContent = "YOU HAVE SUCCUMBED TO THE DEVICE'S WILL"
-            console.log("YOU HAVE SUCCUMBED TO THE DEVICE'S WILL");
-        }
-        else if (computerScore == humanScore){
-            console.log("YOU AND THE DEVICE ARE EQUALLY MATCHED");
-        }
+    } else {
+        resultDisplay.textContent = "THE GAME HAS CONCLUDED, IT WILL NEVER BE PLAYED AGAIN"
     }
 }
-
-playGame();
