@@ -71,11 +71,6 @@ buttons.forEach((button) => {
   });
 });
 
-// function getHumanChoice() {
-//     let playerChoice = prompt("MAKE YOUR CHOICE");
-//     return playerChoice;
-// }
-
 function playGame() {
   if (humanScore < 5 && computerScore < 5) {
     function playRound(humanChoice, computerChoice) {
